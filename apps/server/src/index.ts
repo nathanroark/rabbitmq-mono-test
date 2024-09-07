@@ -1,5 +1,6 @@
 import { Elysia, t } from 'elysia'
 import { staticPlugin } from '@elysiajs/static'
+import { publishMessage, consumeMessages } from './libs/rabbitmq'
 
 export const app = new Elysia()
     .get('/', 'ok')
@@ -38,6 +39,16 @@ export const app = new Elysia()
             })
         }
     })
+    .ws('/chat', {
+        body: t.String(),
+        response: t.String(),
+        message(ws, message) {
+            // Echo the received message back to the client
+            ws.send(`Received: ${message}`)
+            // Publish received message to RabbitMQ
+            publishMessage(message)
+        }
+    })
     .listen(process.env.PORT ?? 3001) // use given port or 3001
 
 if (process.env.NODE_ENV !== 'production')
@@ -48,3 +59,10 @@ export type app = typeof app
 console.log(
     `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
 )
+
+// Consume messages from RabbitMQ and send to WebSocket clients
+consumeMessages((message) => {
+    // Logic to broadcast message to all connected WebSocket clients
+    // You need to keep track of connected clients and send messages accordingly
+    console.log(`Broadcasting message from RabbitMQ: ${message}`)
+})

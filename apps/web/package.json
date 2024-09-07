@@ -21,8 +21,7 @@
         "react-dom": "18.3.1",
         "react-hook-form": "^7.52.2",
         "ui": "workspace:*",
-        "zod": "^3.23.8",
-        "zustand": "^4.5.4"
+        "zod": "^3.23.8"
     },
     "devDependencies": {
         "@next/bundle-analyzer": "^14.2.5",

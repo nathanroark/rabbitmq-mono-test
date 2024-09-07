@@ -11,9 +11,11 @@
     "dependencies": {
         "@elysiajs/static": "^1.1.1",
         "@elysiajs/swagger": "^1.1.0",
+        "amqplib": "^0.10.4",
         "elysia": "1.1.7"
     },
     "devDependencies": {
+        "@types/amqplib": "^0.10.5",
         "config": "workspace:*"
     }
 }
